@@ -104,7 +104,7 @@ onMounted(() => {
 
 <template>
   <div class="w-100 height-screen">
-    <div class="mb-5">
+    <!-- <div class="mb-5">
       <v-btn @click="shuffleCard" class="mr-1">
         Shuffle
       </v-btn>
@@ -164,7 +164,8 @@ onMounted(() => {
           重新開始
         </v-btn>
       </div>
-    </div>
+    </div> -->
+    <router-view></router-view>
   </div>
 </template>
 

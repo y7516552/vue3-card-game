@@ -13,132 +13,136 @@ watch(props,()=>{
 </script>
 
 <template>
-  <div class="card-container" :class="[status=='collect'?'position-absolute':'']" :style="[status=='collect'?`z-index:-${index} ; transform: translate(${((index/4)*3)}px,${((index/4)*3)}px);`:'']">
-    <v-card
-        v-if="open"
-        variant="outlined"
-        class="mx-auto bg-white"
-        hover
-        width="200"
-        height="300"
-      >
-      <div :class="[suit=='heart'||suit=='diamond'?'text-red-accent-4':'']" class="d-flex w-100 h-100 px-2">
-
-          <div class="d-flex flex-column">
-            <p v-if="rank=='10'" class="text-center ten" >{{ rank }}</p>
-            <p v-else class="text-center font-weight-bold text-h4"  >{{ rank }}</p>
-            <v-icon :icon="`mdi-cards-${suit}`" />
-          </div>
-          <div class="flex-grow-1 flex-shrink-0">
-            <div v-if="rank=='A'" class="d-flex justify-center align-center h-100">
-                <v-icon  size="128" :icon="`mdi-cards-${suit}`" />
-            </div>
-            <div v-if="rank=='2'" class="d-flex flex-column justify-space-between align-center h-100 py-4">
-                <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
-            </div>
+  <div class="card-container" :class="[status=='collect'?'position-absolute':'position-relative']" :style="[status=='collect'?`z-index:-${index} ; transform: translate(${((index/4)*3)}px,${((index/4)*3)}px);`:'']">
+    <transition name="flip-cards">
+        <v-card
+            v-if="open"
+            variant="outlined"
+            class="mx-auto bg-white position-absolute"
+            hover
+            width="200"
+            height="300"
+          >
+          <div :class="[suit=='heart'||suit=='diamond'?'text-red-accent-4':'']" class="d-flex w-100 h-100 px-2">
     
-            <div v-if="rank=='3'" class="d-flex flex-column justify-space-between align-center h-100 py-4">
-                <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
-            </div>
-            <div v-if="rank=='4'" class="d-flex flex-row justify-space-between py-4 h-100">
-                <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
+              <div class="d-flex flex-column">
+                <p v-if="rank=='10'" class="text-center ten" >{{ rank }}</p>
+                <p v-else class="text-center font-weight-bold text-h4"  >{{ rank }}</p>
+                <v-icon :icon="`mdi-cards-${suit}`" />
+              </div>
+              <div class="flex-grow-1 flex-shrink-0">
+                <div v-if="rank=='A'" class="d-flex justify-center align-center h-100">
+                    <v-icon  size="128" :icon="`mdi-cards-${suit}`" />
+                </div>
+                <div v-if="rank=='2'" class="d-flex flex-column justify-space-between align-center h-100 py-4">
                     <v-icon size="48" :icon="`mdi-cards-${suit}`" />
                     <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
                 </div>
-            </div>
-
-            <div v-if="rank=='5'" class="d-flex flex-row justify-space-between py-4 h-100 position-relative">
-                <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
-                    <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
-                </div>
-                <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute position-center"/>
-            </div>
-
-            <div v-if="rank=='6'" class="d-flex flex-row justify-space-between py-4 h-100">
-                <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
+        
+                <div v-if="rank=='3'" class="d-flex flex-column justify-space-between align-center h-100 py-4">
                     <v-icon size="48" :icon="`mdi-cards-${suit}`" />
                     <v-icon size="48" :icon="`mdi-cards-${suit}`" />
                     <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
                 </div>
-            </div>
-
-            <div v-if="rank=='7'" class="d-flex flex-row justify-space-between py-4 h-100 position-relative">
-                <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
-                    <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                <div v-if="rank=='4'" class="d-flex flex-row justify-space-between py-4 h-100">
+                    <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                    </div>
                 </div>
-                <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute three-fourths "/>
-            </div>
-
-            <div v-if="rank=='8'" class="d-flex flex-row justify-space-between py-4 h-100">
-                <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
-                    <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+    
+                <div v-if="rank=='5'" class="d-flex flex-row justify-space-between py-4 h-100 position-relative">
+                    <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                    </div>
+                    <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute position-center"/>
                 </div>
-            </div>
-
-            <div v-if="rank=='9'" class="d-flex flex-row justify-space-between py-4 h-100 position-relative">
-                <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
-                    <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+    
+                <div v-if="rank=='6'" class="d-flex flex-row justify-space-between py-4 h-100">
+                    <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                    </div>
                 </div>
-                <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute position-center"/>
-            </div>
-
-            <div v-if="rank=='10'" class="d-flex flex-row justify-space-between py-4 h-100 position-relative">
-                <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
-                    <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
-                    <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+    
+                <div v-if="rank=='7'" class="d-flex flex-row justify-space-between py-4 h-100 position-relative">
+                    <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                    </div>
+                    <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute three-fourths "/>
                 </div>
-                <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute one-fourth"/>
-                <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute three-fourths"/>
-            </div>
-
-            <div v-if="rank=='J'" class="d-flex justify-center align-center h-100">
-                <v-icon  size="128" icon="mdi-chess-pawn" />
-            </div>
-
-            <div v-if="rank=='Q'" class="d-flex justify-center align-center h-100">
-                <v-icon  size="128" icon="mdi-chess-queen" />
-            </div>
-
-            <div v-if="rank=='K'" class="d-flex justify-center align-center h-100">
-                <v-icon  size="128" icon="mdi-chess-king" />
-            </div>
+    
+                <div v-if="rank=='8'" class="d-flex flex-row justify-space-between py-4 h-100">
+                    <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                    </div>
+                </div>
+    
+                <div v-if="rank=='9'" class="d-flex flex-row justify-space-between py-4 h-100 position-relative">
+                    <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                    </div>
+                    <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute position-center"/>
+                </div>
+    
+                <div v-if="rank=='10'" class="d-flex flex-row justify-space-between py-4 h-100 position-relative">
+                    <div v-for="item in 2" :key="item" class="d-flex flex-column justify-space-between align-center h-100">
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                        <v-icon class="reverse" size="48" :icon="`mdi-cards-${suit}`" />
+                    </div>
+                    <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute one-fourth"/>
+                    <v-icon size="48" :icon="`mdi-cards-${suit}`" class="position-absolute three-fourths"/>
+                </div>
+    
+                <div v-if="rank=='J'" class="d-flex justify-center align-center h-100">
+                    <v-icon  size="128" icon="mdi-chess-pawn" />
+                </div>
+    
+                <div v-if="rank=='Q'" class="d-flex justify-center align-center h-100">
+                    <v-icon  size="128" icon="mdi-chess-queen" />
+                </div>
+    
+                <div v-if="rank=='K'" class="d-flex justify-center align-center h-100">
+                    <v-icon  size="128" icon="mdi-chess-king" />
+                </div>
+        
+              </div>
+              <div class="d-flex flex-column flex-column-reverse">
+                <p v-if="rank=='10'" class="reverse text-center ten" >{{ rank }}</p>
+                <p v-else class="reverse text-center font-weight-bold text-h4"  >{{ rank }}</p>
+                <v-icon class="reverse" :icon="`mdi-cards-${suit}`" />
+              </div>
     
           </div>
-          <div class="d-flex flex-column flex-column-reverse">
-            <p v-if="rank=='10'" class="reverse text-center ten" >{{ rank }}</p>
-            <p v-else class="reverse text-center font-weight-bold text-h4"  >{{ rank }}</p>
-            <v-icon class="reverse" :icon="`mdi-cards-${suit}`" />
+        </v-card>
+    </transition>
+    <transition name="flip-cards">
+        <v-card
+            v-if="!open"
+            variant="outlined"
+            class="mx-auto top-0 position-absolute"
+            hover
+            color="outlined"
+            width="200"
+            height="300"
+          >
+          <div class="back">
+            <div class="stripe"></div>
           </div>
-
-      </div>
-    </v-card>
-    <v-card
-        v-if="!open"
-        variant="outlined"
-        class="mx-auto"
-        hover
-        color="outlined"
-        width="200"
-        height="300"
-      >
-      <div class="back">
-        <div class="stripe"></div>
-      </div>
-    </v-card>
+        </v-card>
+    </transition>
   </div>
 </template>
 
