@@ -1,5 +1,6 @@
 <script setup>
-import { ref ,onMounted  } from 'vue';
+import { ref ,onMounted, computed  } from 'vue';
+import { useDisplay } from 'vuetify'
 import DeckCard from '@/components/card/DeckCard.vue'
 
 const suits = ["spade", "diamond", "club", "heart"];
@@ -91,6 +92,38 @@ const resetGame = () => {
   resetCompare()
 }
 
+const { name } = useDisplay()
+
+const height = computed(() => {
+    // name is reactive and
+    // must use .value
+    switch (name.value) {
+      case 'xs': return 180
+      case 'sm': return 240
+      case 'md': return 270
+      case 'lg': return 300
+      case 'xl': return 300
+      case 'xxl': return 300
+    }
+
+    return undefined
+  })
+
+  const width = computed(() => {
+    // name is reactive and
+    // must use .value
+    switch (name.value) {
+      case 'xs': return 120
+      case 'sm': return 160
+      case 'md': return 180
+      case 'lg': return 200
+      case 'xl': return 200
+      case 'xxl': return 200
+    }
+
+    return undefined
+  })
+
 
 onMounted(() => {
   resetGame()
@@ -120,10 +153,10 @@ onMounted(() => {
           </div>
       </div>
       <div class="d-flex justify-center align-center ga-4 mb-5">
-        <div class="border-md rounded-lg" style="width: 200px;height: 300px;">
+        <div class="border-md rounded-lg" :style="[`width: ${width}px;height: ${height}px;`]">
           <DeckCard v-if="zoom1" :suit="zoom1.suit" :rank="zoom1.rank" :value="zoom1.value" index="0" status="single" isOpen="ture"/>
         </div>
-        <div class="border-md rounded-lg" style="width: 200px;height: 300px;">
+        <div class="border-md rounded-lg" :style="[`width: ${width}px;height: ${height}px;`]">
           <DeckCard v-if="zoom2" :suit="zoom2.suit" :rank="zoom2.rank" :value="zoom2.value" index="0" status="collect" :isOpen="compareResult"/>
         </div>
       </div>
