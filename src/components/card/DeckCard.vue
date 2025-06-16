@@ -1,5 +1,7 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
+import { useDisplay } from 'vuetify'
+
 
 const open = ref(false);
 const props = defineProps(['suit','rank','value','index','status','isOpen'])
@@ -10,6 +12,41 @@ watch(props,()=>{
     if(props.isOpen) open.value = true
     if(!props.isOpen) open.value = false
 },{ immediate: true })
+
+
+const { name } = useDisplay()
+
+const height = computed(() => {
+    // name is reactive and
+    // must use .value
+    switch (name.value) {
+      case 'xs': return 180
+      case 'sm': return 240
+      case 'md': return 270
+      case 'lg': return 300
+      case 'xl': return 300
+      case 'xxl': return 300
+    }
+
+    return undefined
+  })
+
+  const width = computed(() => {
+    // name is reactive and
+    // must use .value
+    switch (name.value) {
+      case 'xs': return 120
+      case 'sm': return 160
+      case 'md': return 180
+      case 'lg': return 200
+      case 'xl': return 200
+      case 'xxl': return 200
+    }
+
+    return undefined
+  })
+
+
 </script>
 
 <template>
@@ -20,8 +57,8 @@ watch(props,()=>{
             variant="outlined"
             class="mx-auto bg-white position-absolute"
             hover
-            width="200"
-            height="300"
+            :width="width"
+            :height="height"
           >
           <div :class="[suit=='heart'||suit=='diamond'?'text-red-accent-4':'']" class="d-flex w-100 h-100 px-2">
     
@@ -135,8 +172,8 @@ watch(props,()=>{
             class="mx-auto top-0 position-absolute"
             hover
             color="outlined"
-            width="200"
-            height="300"
+            :width="width"
+            :height="height"
           >
           <div class="back">
             <div class="stripe"></div>
@@ -185,7 +222,7 @@ watch(props,()=>{
 .stripe{
     position: relative;
     width: 6px;
-    height: 250%;
+    height:300%;
     background-color: #fff;
     transform: translate(40px,-40px) rotate(30deg);
     box-shadow:

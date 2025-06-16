@@ -119,7 +119,7 @@ onMounted(() => {
             結果: {{  compareResult  }}
           </div>
       </div>
-      <div class="d-flex justify-center align-center ga-3 mb-5">
+      <div class="d-flex justify-center align-center ga-4 mb-5">
         <div class="border-md rounded-lg" style="width: 200px;height: 300px;">
           <DeckCard v-if="zoom1" :suit="zoom1.suit" :rank="zoom1.rank" :value="zoom1.value" index="0" status="single" isOpen="ture"/>
         </div>
@@ -158,7 +158,7 @@ onMounted(() => {
 }
 
 .flip-cards-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
   transform: rotateY(-180deg);
 }
 
