@@ -47,8 +47,9 @@
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-account-group-outline"
-            title="Users"
+            title="衝浪"
             value="users"
+            href="/game/surfingCard"
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>
