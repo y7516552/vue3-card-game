@@ -2,6 +2,7 @@
 import { ref ,onMounted, computed  } from 'vue';
 import { useDisplay } from 'vuetify'
 import DeckCard from '@/components/card/DeckCard.vue'
+import GameDialog from '@/components/GameDialog.vue';
 
 const suits = ["spade", "diamond", "club", "heart"];
 const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
@@ -51,6 +52,16 @@ const compareResult = ref('')
 
 const gameIsOver = ref(false)
 
+const totalResult = computed(() => {
+  return {
+    game:'比大小',
+    winCounts:winCounts.value,
+    lostCounts:lostCounts.value
+  }
+}) 
+const left =  computed(() => {
+  return (cardList.value.length/2)+1
+})
 
 const compareCards = () => {
   if(guess.value == 'higher' && zoom2.value.value > zoom1.value.value) {
@@ -141,6 +152,9 @@ onMounted(() => {
       <div class="d-flex flex-column justify-center align-center mb-5">
           <h2>比大小</h2>
           <div class="">
+            剩餘次數: {{ left }} 次
+          </div>
+          <div class="">
             成績: 
             <div class="">贏: {{ winCounts  }} 場</div>
             <div class="">輸: {{ lostCounts }} 場</div>
@@ -175,23 +189,21 @@ onMounted(() => {
         <v-btn v-if="compareResult&&!gameIsOver" @click="resetCompare" class="mr-1">
           再來一場
         </v-btn>
-        <v-btn v-if="gameIsOver" @click="resetGame" class="mr-1">
-          重新開始
-        </v-btn>
       </div>
     </div>
+    <GameDialog :openDialog="gameIsOver" :result="totalResult" @resetGame="resetGame"></GameDialog>
   </div>
 </template>
 
 <style>
 
 .flip-cards-enter-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease-out;
   transform: rotateY(0deg);
 }
 
 .flip-cards-leave-active {
-  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
   transform: rotateY(-180deg);
 }
 

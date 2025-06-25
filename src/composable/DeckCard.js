@@ -1,4 +1,4 @@
-import { ref ,onMounted, computed  } from 'vue';
+import { ref ,onMounted } from 'vue';
 
 const suits = ["spade", "diamond", "club", "heart"];
 const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
