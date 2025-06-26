@@ -29,11 +29,17 @@ const router = createRouter({
           path: '/game/highCardWin',
           name: 'highCardWin',
           component: HighCardWin,
+          meta:{
+            title:'比大小',
+          }
         },
         {
           path: '/game/surfingCard',
-          name: 'surfingCar',
+          name: 'surfingCard',
           component: SurfingCard,
+          meta:{
+            title:'衝浪',
+          }
         },
       ]
     }

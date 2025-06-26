@@ -139,18 +139,21 @@ const height = computed(() => {
 onMounted(() => {
   resetGame()
 });
+
+
+
 </script>
 
 
 <template>
   <div class="w-100 height-screen">
-   
+    
     <div class="d-flex flex-wrap position-relative">
       <DeckCard v-for="(item, index) in cardList" :key="item" :suit="item.suit" :rank="item.rank" :value="item.value" :index="index" :status="status"/>
     </div>
     <div class="h-screen">
       <div class="d-flex flex-column justify-center align-center mb-5">
-          <h2>比大小</h2>
+          <h2>比大小</h2> 
           <div class="">
             剩餘次數: {{ left }} 次
           </div>

@@ -1,6 +1,10 @@
 
 <script setup>
   import { ref } from 'vue'
+  import { useRoute } from 'vue-router'
+
+  const route = useRoute()
+  const gameName = route.meta.title
 
   const drawer = ref(true)
   const rail = ref(true)
@@ -54,7 +58,7 @@
         </v-list>
       </v-navigation-drawer>
 
-    <v-app-bar title="Application bar">
+    <v-app-bar :title="gameName">
       
     </v-app-bar>
 

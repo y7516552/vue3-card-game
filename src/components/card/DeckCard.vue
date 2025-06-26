@@ -203,16 +203,19 @@ const height = computed(() => {
                     <v-icon :size="iconSize" :icon="`mdi-cards-${suit}`" class="position-absolute three-fourths"/>
                 </div>
     
-                <div v-if="rank=='J'" class="d-flex justify-center align-center h-100">
-                    <v-icon  :size="iconSizeAJQK" icon="mdi-chess-pawn" />
+                <div v-if="rank=='J'" class="d-flex justify-center align-center h-100 position-relative">
+                  <v-icon :size="iconSize" :icon="`mdi-cards-${suit}`" class="position-absolute JQK"/>
+                  <v-icon  :size="iconSizeAJQK" icon="mdi-chess-pawn" />
                 </div>
     
-                <div v-if="rank=='Q'" class="d-flex justify-center align-center h-100">
-                    <v-icon  :size="iconSizeAJQK" icon="mdi-chess-queen" />
+                <div v-if="rank=='Q'" class="d-flex justify-center align-center h-100 position-relative">
+                  <v-icon :size="iconSize" :icon="`mdi-cards-${suit}`" class="position-absolute JQK"/>
+                  <v-icon  :size="iconSizeAJQK" icon="mdi-chess-queen" />
                 </div>
     
-                <div v-if="rank=='K'" class="d-flex justify-center align-center h-100">
-                    <v-icon  :size="iconSizeAJQK" icon="mdi-chess-king" />
+                <div v-if="rank=='K'" class="d-flex justify-center align-center h-100 position-relative">
+                  <v-icon :size="iconSize" :icon="`mdi-cards-${suit}`" class="position-absolute JQK"/>
+                  <v-icon  :size="iconSizeAJQK" icon="mdi-chess-king" />
                 </div>
         
               </div>
@@ -270,6 +273,11 @@ const height = computed(() => {
     font-weight: 700;
     line-height: 1.333;
     line-height: -1.2px;
+}
+.JQK{
+    top:28%;
+    right:50%;
+    transform:translate(50%,-50%);
 }
 .back{
     backface-visibility: hidden;
