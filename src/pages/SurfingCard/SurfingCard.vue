@@ -11,22 +11,18 @@ const guessList = ref([]);
 const suitList = [
   {
     name:'黑桃',
-    icon:'mdi-cards-spade',
     value:'spade'
   },
   {
     name:'菱形',
-    icon:'mdi-cards-diamond',
     value:'diamond'
   },
   {
     name:'梅花',
-    icon:'mdi-cards-',
     value:'club'
   },
   {
     name:'愛心',
-    icon:'mdi-cards-',
     value:'heart'
   }
 ]
@@ -38,10 +34,7 @@ const dealCard = () => {
   guessList.value.push(cardList.value.shift())
 } 
 
-const resetGame = () => {
-    resetCard()
-    surfingList.value = cardList.value.splice(0,5)
-}
+
 const { name } = useDisplay()
 
 const height = computed(() => {
@@ -128,24 +121,32 @@ const height = computed(() => {
   }
 
 
-  const compareCardsSuit = () => {
+  const compareCardsSuit = (index) => {
     RoundFive.value = true
-    if(guess.value == guessList.value[4].suit){
+    console.log('guess.value',guess.value)
+    console.log('surfingList.value[index]',surfingList.value[index])
+    if(guess.value == surfingList.value[index].suit){
       gameIsOver.value = true
     }else{
-      // RoundFive.value = false
-      resultList.value[4] = 'lose'
+      //RoundFive.value = false
+      resultList.value[index] = 'lose'
       lostCounts.value++
-      surfingList.value.splice(4,1,cardList.value.shift());
+      // surfingList.value.splice(4,1,cardList.value.shift());
     }
   }
 
 const resetCompare = () => {
+
+
+  if(RoundFive.value){
+    surfingList.value.splice(4,1,cardList.value.shift());
+    guessingIndex.value = 3
+    RoundFive.value = false
+  }
   
 
 
   for(let i = 0 ; i < guessingIndex.value+1 ; i++) {
-    console.log(i,guessList.value,guessingIndex)
     surfingList.value.splice(i,1,guessList.value[i]);
   }
 
@@ -158,13 +159,25 @@ const resetCompare = () => {
   guessList.value.push(cardList.value.shift())
 }
 
+const resetGame = () => {
+    resetCard()
+    RoundFive.value = false
+    guess.value =''
+    guessingIndex.value = 0
+    compareResult.value = ''
+    lostCounts.value = 0
+    resultList.value = ['','','','','']
+    guessList.value = []
+    dealCard()
+}
+
 onMounted(()=>{
   dealCard()
 })
 
-watch(()=>{
-
-})
+// watch(()=>{
+//   if(gameIsOver.value == true) 
+// })
 </script>
 
 <template>
@@ -174,20 +187,17 @@ watch(()=>{
         <h2>衝浪</h2>
         <div class="">
           <div class="">
-            剩餘次數: {{left}} 次
+            剩餘牌數: {{left}} 次
           </div>
           <div class="">
-            回合: {{guessingIndex}} 
+            回合: {{guessingIndex+1}} 
           </div>
           <div class="">
               成績: 
               <div class="">輸: {{ lostCounts }} 場</div>
             </div>
-            <div v-if="guess" class="">
-              你的選擇:{{ guess == 'higher'?"大":"小" }}
-            </div>
             <div class="">
-              結果: {{  compareResult  }}
+              結果: {{  resultList  }}
             </div>  
         </div>
       </div>
@@ -205,6 +215,9 @@ watch(()=>{
         <div v-for="index in 5" :key="index" class="">
           <div class="mb-5" :style="[`width: ${width}px;height: ${height}px;`]">
             <DeckCard v-if="guessList[index-1]"   :suit="guessList[index-1].suit" :rank="guessList[index-1].rank" :value="guessList[index-1].value" :index="index-1" status="single" :isOpen="resultList[index-1]"/>
+            <div v-if="guessingIndex == index-1 && guess" class="d-flex justify-center align-center h-100" :class="[guess=='heart'||guess=='diamond'?'text-red-accent-4':'']">
+              <v-icon size="128" :icon="`mdi-cards-${guess}`" />
+            </div>
           </div>
           <div v-if="guess=='' && guessingIndex == index-1&&index!==5" class=" d-flex justify-center ga-3">
             <v-btn @click="guessing('higher')" class="mr-1">
@@ -214,8 +227,8 @@ watch(()=>{
               小
             </v-btn>
           </div>
-          <div v-if="guess=='' && guessingIndex == index-1&&index==5" class=" d-flex justify-center ga-3">
-            <v-btn v-for="(item,index) in suitList" :key="index" :prepend-icon="`mdi-cards-${item.value}`" @click="guessing(item.value)" class="mr-1">
+          <div v-if="guess=='' && guessingIndex == index-1&&index==5" class=" d-flex flex-column ga-3">
+            <v-btn v-for="(item,index) in suitList" :key="index" :prepend-icon="`mdi-cards-${item.value}`" @click="guessing(item.value)" class="mr-1" :class="[item.value=='heart'||item.value=='diamond'?'text-red-accent-4':'']">
               {{ item.name }}
             </v-btn>
           </div>
