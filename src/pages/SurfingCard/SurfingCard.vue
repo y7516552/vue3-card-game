@@ -1,5 +1,5 @@
 <script setup>
-import { ref ,onMounted ,computed,watch } from 'vue';
+import { ref ,onMounted ,computed} from 'vue';
 import DeckCard from '@/components/card/DeckCard.vue'
 import GameDialog from '@/components/GameDialog.vue';
 import { useDeckCard } from '@/composable/DeckCard.js'
@@ -82,8 +82,13 @@ const height = computed(() => {
   const resultList = ref(['','','','',''])
 
   const totalResult = computed(() => {
+    let message = ''
+    message ='衝浪成功!!'
+    if(cardList.value.length == 0) message ='卡牌用盡...'
+
     return {
       game:'衝浪',
+      message: message,
       lostCounts:lostCounts.value
     }
   }) 
@@ -99,7 +104,6 @@ const height = computed(() => {
     if(guess.value == 'higher' && guessList.value[index].value > surfingList.value[index].value) {
       resultList.value[index] = 'win'
       guessingIndex.value++
-      // surfingList.value.splice(0,1,guessList.value[index]);
       guess.value =''
       if(guessingIndex.value !== 4) guessList.value.push(cardList.value.shift())
     }
@@ -117,21 +121,19 @@ const height = computed(() => {
       resultList.value[index] = 'lose'
       lostCounts.value++
     }
-    if(cardList.value.length == 0 ) gameIsOver.value = true
+    if(cardList.value.length == 0 ) {
+      gameIsOver.value = true
+    }
   }
 
 
   const compareCardsSuit = (index) => {
     RoundFive.value = true
-    console.log('guess.value',guess.value)
-    console.log('surfingList.value[index]',surfingList.value[index])
     if(guess.value == surfingList.value[index].suit){
       gameIsOver.value = true
     }else{
-      //RoundFive.value = false
       resultList.value[index] = 'lose'
       lostCounts.value++
-      // surfingList.value.splice(4,1,cardList.value.shift());
     }
   }
 
@@ -161,6 +163,7 @@ const resetCompare = () => {
 
 const resetGame = () => {
     resetCard()
+    gameIsOver.value = false
     RoundFive.value = false
     guess.value =''
     guessingIndex.value = 0
@@ -175,9 +178,6 @@ onMounted(()=>{
   dealCard()
 })
 
-// watch(()=>{
-//   if(gameIsOver.value == true) 
-// })
 </script>
 
 <template>
@@ -187,7 +187,7 @@ onMounted(()=>{
         <h2>衝浪</h2>
         <div class="">
           <div class="">
-            剩餘牌數: {{left}} 次
+            剩餘牌數: {{left}} 張
           </div>
           <div class="">
             回合: {{guessingIndex+1}} 
@@ -196,9 +196,7 @@ onMounted(()=>{
               成績: 
               <div class="">輸: {{ lostCounts }} 場</div>
             </div>
-            <div class="">
-              結果: {{  resultList  }}
-            </div>  
+            
         </div>
       </div>
       

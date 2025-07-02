@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import GameView from '../views/GameView.vue'
 import HighCardWin from '@/pages/HighCardWin/HighCardWin.vue'
 import SurfingCard from '@/pages/SurfingCard/SurfingCard.vue'
+import HorseRace from '@/pages/HorseRace/HorseRace.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,14 @@ const router = createRouter({
           component: SurfingCard,
           meta:{
             title:'衝浪',
+          }
+        },
+        {
+          path: '/game/horseRace',//HorseRace
+          name: 'horseRace',
+          component: HorseRace,
+          meta:{
+            title:'賽馬',
           }
         },
       ]

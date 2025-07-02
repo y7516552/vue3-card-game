@@ -46,14 +46,17 @@
           <v-list-item
             prepend-icon="mdi-account"
             title="比大小"
-            value="account"
             href="/game/highCardWin"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-account-group-outline"
             title="衝浪"
-            value="users"
             href="/game/surfingCard"
+          ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-account-group-outline"
+            title="賽馬"
+            href="/game/horseRace"
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>

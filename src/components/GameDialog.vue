@@ -10,8 +10,8 @@
 },{ immediate: true })
 
 const resetGame = ()=>{
-    emit('resetGame')
-    dialog.value = false
+  dialog.value = false
+  emit('resetGame')
 }
   
 </script>
@@ -34,6 +34,7 @@ const resetGame = ()=>{
           </template>
 
           <template v-slot:text>
+            <h4>{{result.message?result.message:''}}</h4>
             {{result.winCounts?`贏了 : ${result.winCounts} 場`:''}}
             <br/>
             {{result.lostCounts?`輸了 : ${result.lostCounts} 場`:''}}
