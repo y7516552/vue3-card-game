@@ -38,15 +38,17 @@ const horseList = ref([
   }
 ])
 
+const guess = ref('')
 const round = ref(5)
 const deckList = ref([])
 const gameIsOver = ref(false)
-const winner = ref('')
+const winner = ref({})
 
 const totalResult = computed(() => {
     let message = ''
-    
-    message =`${winner.value} 獲勝!!`
+    let result = '猜錯了...，'
+    if(guess.value == winner.value.suit)  result = '猜對了...，'
+    message =`${result} ${winner.value.name} 獲勝!!`
 
     return {
       game:'賽馬',
@@ -55,6 +57,8 @@ const totalResult = computed(() => {
   }) 
 
 const resetGame = () =>{
+  winner.value = {}
+  guess.value = ''
   gameIsOver.value = false
   deckList.value =   []
   resetCard()
@@ -73,10 +77,10 @@ const height = computed(() => {
     switch (name.value) {
     case 'xs': return 120
       case 'sm': return 160
-      case 'md': return 180
-      case 'lg': return 180
-      case 'xl': return 180
-      case 'xxl': return 180
+      case 'md': return 160
+      case 'lg': return 160
+      case 'xl': return 160
+      case 'xxl': return 160
     }
 
     return undefined
@@ -86,10 +90,10 @@ const height = computed(() => {
     switch (name.value) {
       case 'xs': return 180
       case 'sm': return 240
-      case 'md': return 270
-      case 'lg': return 270
-      case 'xl': return 270
-      case 'xxl': return 270
+      case 'md': return 240
+      case 'lg': return 240
+      case 'xl': return 240
+      case 'xxl': return 240
     }
 
     return undefined
@@ -107,29 +111,28 @@ const height = computed(() => {
     horseList.value.filter(e=>{
       if(e.suit==card.suit) e.time++
       if(e.time == round.value ) {
-        winner.value = e.name
+        winner.value = e
         gameIsOver.value = true
       }
     })
   }
 
+  const guessing = (suit) => {
+    guess.value = suit
+  }
+
 </script>
 
 <template>
-  <div class="w-100 height-screen">
-    <div class="d-flex flex-column justify-center align-center mb-5">
-        <h2>賽馬</h2>
+  <div class="w-100 height-screen ">
+    <div class="d-flex flex-column ga-3 justify-center align-center mb-5">
+        <h2>賽馬(簡易)</h2>
         <div class="">
           <div class="">
             剩餘牌數: {{left}} 張
           </div>
-          <div class="">
-          </div>
-          <div class="">
-            成績: 
-          </div>
         </div>
-        <div class="d-flex">
+        <div v-if="guess" class="d-flex mb-1">
           <v-btn @click="resetGame" class="mr-1">
             重新開始
           </v-btn>
@@ -137,17 +140,27 @@ const height = computed(() => {
             發牌
           </v-btn>
         </div>
-        <div class="">
-          deckList:{{ deckList }}
-          <div class="d-flex flex-wrap position-relative">
+        <div v-if="guess=='' " class=" d-flex ga-3 mb-1">
+          <v-btn v-for="(item,index) in horseList" :key="index" :prepend-icon="`mdi-cards-${item.suit}`" @click="guessing(item.suit)" class="mr-1" :class="[item.suit=='heart'||item.suit=='diamond'?'text-red-accent-4':'']">
+            {{ item.name }}
+          </v-btn>
+          </div>
+        <div class="position-relative" style="width: 50vw;height: 35vh">
+          <div class="d-flex flex-wrap position-relative" style="scale:0.7;">
             <DeckCard v-for="(item, index) in cardList" :key="item" :suit="item.suit" :rank="item.rank" :value="item.value" :index="index" status="collect"/>
+          </div>
+          <div class="d-flex flex-wrap position-absolute" style="scale:0.7; right: 25%;">
+            <template v-if="deckList.length!==0">
+              <DeckCard v-for="(item, index) in deckList" :key="item" :suit="item.suit" :rank="item.rank" :value="item.value" :index="index*-1" is-open="true" status="collect"/>
+            </template>
+            <div v-else class="border-sm position-absolute" :style="`width: ${height}px;height: ${width}px; `"> </div>
           </div>
         </div>
     </div>
-    <div class="d-flex flex-column ga-5 mb-5">
-      <div v-for="horse in horseList" :key="horse.value" class="d-flex ga-3">
+    <div class="d-flex flex-column mb-5">
+      <div v-for="horse in horseList" :key="horse.value" class="d-flex" :class="[guess&&guess == horse.suit?'bg-yellow-lighten-3':'']">
         <div v-for="item in round" :key="item" class="border-sm position-relative" :style="`width: ${width}px;height: ${height}px; scale:0.7;`">
-          <DeckCard v-if="horse.time == (item-1)" :suit="horse.suit" :rank="horse.rank" :value="horse.value" index="1" status="single" isOpen="true" class="horse"/>
+          <DeckCard v-if="horse.time == (item-1)" :suit="horse.suit" :rank="horse.rank" :value="horse.value" index="1" status="single" isOpen="true" class="horse" />
         </div>
       </div>
     </div>
@@ -158,7 +171,10 @@ const height = computed(() => {
 
 <style>
 .horse{
-  transform: rotate(90deg) translateX(50%) translateY(-150px);
+  transform: rotate(90deg) translateX(40%) translateY(-150px);
+}
+.onFocus{
+  background-color: yellow-lighten-3;
 }
 </style>
 
