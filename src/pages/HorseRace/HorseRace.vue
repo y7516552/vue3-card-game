@@ -40,11 +40,26 @@ const horseList = ref([
 
 const round = ref(5)
 const deckList = ref([])
+const gameIsOver = ref(false)
+const winner = ref('')
+
+const totalResult = computed(() => {
+    let message = ''
+    
+    message =`${winner.value} 獲勝!!`
+
+    return {
+      game:'賽馬',
+      message: message,
+    }
+  }) 
 
 const resetGame = () =>{
+  gameIsOver.value = false
   deckList.value =   []
   resetCard()
   cardList.value = cardList.value.filter(e => e.rank !== 'A')
+  horseList.value.forEach(item => item.time = 0)
 }
 
 onMounted(()=>{
@@ -59,9 +74,9 @@ const height = computed(() => {
     case 'xs': return 120
       case 'sm': return 160
       case 'md': return 180
-      case 'lg': return 200
-      case 'xl': return 200
-      case 'xxl': return 200
+      case 'lg': return 180
+      case 'xl': return 180
+      case 'xxl': return 180
     }
 
     return undefined
@@ -72,9 +87,9 @@ const height = computed(() => {
       case 'xs': return 180
       case 'sm': return 240
       case 'md': return 270
-      case 'lg': return 300
-      case 'xl': return 300
-      case 'xxl': return 300
+      case 'lg': return 270
+      case 'xl': return 270
+      case 'xxl': return 270
     }
 
     return undefined
@@ -84,6 +99,19 @@ const height = computed(() => {
   const left =  computed(() => {
     return cardList.value.length
   })
+
+  const dealingcard = () => {
+    if(cardList.value.length ==0) gameIsOver.value = true
+    let card = cardList.value.shift()
+    deckList.value.push(card)
+    horseList.value.filter(e=>{
+      if(e.suit==card.suit) e.time++
+      if(e.time == round.value ) {
+        winner.value = e.name
+        gameIsOver.value = true
+      }
+    })
+  }
 
 </script>
 
@@ -98,29 +126,38 @@ const height = computed(() => {
           <div class="">
           </div>
           <div class="">
-              成績: 
+            成績: 
+          </div>
+        </div>
+        <div class="d-flex">
+          <v-btn @click="resetGame" class="mr-1">
+            重新開始
+          </v-btn>
+          <v-btn @click="dealingcard" class="mr-1">
+            發牌
+          </v-btn>
+        </div>
+        <div class="">
+          deckList:{{ deckList }}
+          <div class="d-flex flex-wrap position-relative">
+            <DeckCard v-for="(item, index) in cardList" :key="item" :suit="item.suit" :rank="item.rank" :value="item.value" :index="index" status="collect"/>
           </div>
         </div>
     </div>
     <div class="d-flex flex-column ga-5 mb-5">
-      <div v-for="horse in horseList" :key="horse.value" class="d-flex ga-5">
-        <div v-for="item in round" :key="item" class="border-sm position-relative" :style="`width: ${width}px;height: ${height}px;`">
+      <div v-for="horse in horseList" :key="horse.value" class="d-flex ga-3">
+        <div v-for="item in round" :key="item" class="border-sm position-relative" :style="`width: ${width}px;height: ${height}px; scale:0.7;`">
           <DeckCard v-if="horse.time == (item-1)" :suit="horse.suit" :rank="horse.rank" :value="horse.value" index="1" status="single" isOpen="true" class="horse"/>
         </div>
       </div>
     </div>
-    <div class="">
-      <div class="d-flex flex-wrap position-relative">
-        <DeckCard v-for="(item, index) in cardList" :key="item" :suit="item.suit" :rank="item.rank" :value="item.value" :index="index" status="collect"/>
-      </div>
-    </div>
+    
     <GameDialog :openDialog="gameIsOver" :result="totalResult" @resetGame="resetGame"></GameDialog>
   </div>
 </template>
 
 <style>
 .horse{
-  scale:0.8;
   transform: rotate(90deg) translateX(50%) translateY(-150px);
 }
 </style>
