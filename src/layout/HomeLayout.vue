@@ -1,14 +1,17 @@
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref,watchEffect } from 'vue'
   import { useRoute } from 'vue-router'
 
   const route = useRoute()
-  const gameName = route.meta.title
-
+  
   const drawer = ref(true)
   const rail = ref(true)
-  
+  const gameName = ref('')
+
+  watchEffect(()=>{
+    gameName.value =route.meta.title
+  })
 </script>
 
 <template>
@@ -22,8 +25,8 @@
       >
         <v-list>
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-            title="John Leider"
+            prepend-icon="mdi-cards"
+            title="撲克小遊戲"
           >
             <template v-slot:append>
               <v-btn
@@ -41,20 +44,20 @@
           <v-list-item
             prepend-icon="mdi-home-city"
             title="Home"
-            value="home"
+             href="/"
           ></v-list-item>
           <v-list-item
-            prepend-icon="mdi-account"
+            prepend-icon="mdi-cards-outline"
             title="比大小"
             href="/game/highCardWin"
           ></v-list-item>
           <v-list-item
-            prepend-icon="mdi-account-group-outline"
+            prepend-icon="mdi-shark-fin"
             title="衝浪"
             href="/game/surfingCard"
           ></v-list-item>
           <v-list-item
-            prepend-icon="mdi-account-group-outline"
+            prepend-icon="mdi-horse"
             title="賽馬"
             href="/game/horseRace"
           ></v-list-item>
