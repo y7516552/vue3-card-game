@@ -9,7 +9,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/vue3-card-game',
       name: 'home',
       component: HomeView,
       meta:{
@@ -17,12 +17,12 @@ const router = createRouter({
       }
     },
     {
-      path: '/game',
+      path: 'vue3-card-game/game',
       name: 'game',
       component: GameView,
       children:[
         {
-          path: '/game/highCardWin',
+          path: 'vue3-card-game/game/highCardWin',
           name: 'highCardWin',
           component: HighCardWin,
           meta:{
@@ -30,7 +30,7 @@ const router = createRouter({
           }
         },
         {
-          path: '/game/surfingCard',
+          path: 'vue3-card-game/game/surfingCard',
           name: 'surfingCard',
           component: SurfingCard,
           meta:{
@@ -38,7 +38,7 @@ const router = createRouter({
           }
         },
         {
-          path: '/game/horseRace',//HorseRace
+          path: 'vue3-card-game/game/horseRace',//HorseRace
           name: 'horseRace',
           component: HorseRace,
           meta:{
