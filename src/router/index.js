@@ -10,6 +10,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: ErrorPage ,meta:{ title:'找不到頁面...'}},
+    { path: '/dist', redirect: { name: 'home' } },
     {
       path: '/',
       name: 'home',
