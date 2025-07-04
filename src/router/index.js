@@ -4,12 +4,14 @@ import GameView from '../views/GameView.vue'
 import HighCardWin from '@/pages/HighCardWin/HighCardWin.vue'
 import SurfingCard from '@/pages/SurfingCard/SurfingCard.vue'
 import HorseRace from '@/pages/HorseRace/HorseRace.vue'
+import ErrorPage from '@/pages/ErrorPage/ErrorPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: ErrorPage ,meta:{ title:'找不到頁面...'}},
     {
-      path: '/vue3-card-game',
+      path: '/',
       name: 'home',
       component: HomeView,
       meta:{
@@ -17,12 +19,12 @@ const router = createRouter({
       }
     },
     {
-      path: 'vue3-card-game/game',
+      path: '/game',
       name: 'game',
       component: GameView,
       children:[
         {
-          path: 'vue3-card-game/game/highCardWin',
+          path: '/game/highCardWin',
           name: 'highCardWin',
           component: HighCardWin,
           meta:{
@@ -30,7 +32,7 @@ const router = createRouter({
           }
         },
         {
-          path: 'vue3-card-game/game/surfingCard',
+          path: '/game/surfingCard',
           name: 'surfingCard',
           component: SurfingCard,
           meta:{
@@ -38,7 +40,7 @@ const router = createRouter({
           }
         },
         {
-          path: 'vue3-card-game/game/horseRace',//HorseRace
+          path: '/game/horseRace',//HorseRace
           name: 'horseRace',
           component: HorseRace,
           meta:{
