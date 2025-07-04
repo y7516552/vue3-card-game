@@ -1,9 +1,10 @@
 
 <script setup>
   import { ref,watchEffect } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute,useRouter } from 'vue-router'
 
   const route = useRoute()
+  const router = useRouter()
   
   const drawer = ref(true)
   const rail = ref(true)
@@ -44,22 +45,22 @@
           <v-list-item
             prepend-icon="mdi-home-city"
             title="Home"
-             href="/dist"
+            @click="router.push({ name: 'home' })"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-cards-outline"
             title="比大小"
-            href="/dist/game/highCardWin"
+            @click="router.push({ name: 'highCardWin' })"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-shark-fin"
             title="衝浪"
-            href="/dist/game/surfingCard"
+            @click="router.push({ name: 'surfingCard' })"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-horse"
             title="賽馬"
-            href="/dist/game/horseRace"
+            @click="router.push({ name: 'horseRace' })"
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>
