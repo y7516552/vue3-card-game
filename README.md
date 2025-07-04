@@ -2,7 +2,7 @@
 
 <p>這裡是 Steven 的練習場</p>
 <p>主要是關於 JS 的卡牌小遊戲</p>
-<a href="https://y7516552.github.io/vue3-card-game/">Demo</a>
+<a href="https://y7516552.github.io/vue3-card-game/dist">Demo</a>
 <p>
     部分遊戲靈感參考
     <a href="https://www.youtube.com/@McJengSu/videos">恩希俊</a>
