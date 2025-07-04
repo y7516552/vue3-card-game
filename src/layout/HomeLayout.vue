@@ -44,22 +44,22 @@
           <v-list-item
             prepend-icon="mdi-home-city"
             title="Home"
-             href="/"
+             href="/dist"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-cards-outline"
             title="比大小"
-            href="/game/highCardWin"
+            href="/dist/game/highCardWin"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-shark-fin"
             title="衝浪"
-            href="/game/surfingCard"
+            href="/dist/game/surfingCard"
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-horse"
             title="賽馬"
-            href="/game/horseRace"
+            href="/dist/game/horseRace"
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>
