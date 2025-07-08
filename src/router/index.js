@@ -12,7 +12,7 @@ const router = createRouter({
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: ErrorPage ,meta:{ title:'找不到頁面...'}},
     { path: '/vue3-card-game/dist', redirect: { name: 'home' } },
     {
-      path: '/vue3-card-game/',
+      path: '/',
       name: 'home',
       component: HomeView,
       meta:{
@@ -20,12 +20,12 @@ const router = createRouter({
       }
     },
     {
-      path: '/vue3-card-game/game',
+      path: '/game',
       name: 'game',
       component: GameView,
       children:[
         {
-          path: '/vue3-card-game/game/highCardWin',
+          path: '/game/highCardWin',
           name: 'highCardWin',
           component: HighCardWin,
           meta:{
@@ -33,7 +33,7 @@ const router = createRouter({
           }
         },
         {
-          path: '/vue3-card-game/game/surfingCard',
+          path: '/game/surfingCard',
           name: 'surfingCard',
           component: SurfingCard,
           meta:{
@@ -41,7 +41,7 @@ const router = createRouter({
           }
         },
         {
-          path: '/vue3-card-game/game/horseRace',
+          path: '/game/horseRace',
           name: 'horseRace',
           component: HorseRace,
           meta:{
