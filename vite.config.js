@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base:'/vue3-card-game/',
+  base:'/vue3-card-game/dist',
   plugins: [
     vue(),
     vueDevTools(),
