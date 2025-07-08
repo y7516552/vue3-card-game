@@ -6,6 +6,7 @@
   const route = useRoute()
   const router = useRouter()
   
+  console.log('route',route)
   const drawer = ref(true)
   const rail = ref(true)
   const gameName = ref('')
