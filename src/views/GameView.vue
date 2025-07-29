@@ -1,10 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { ref,watchEffect } from 'vue'
 import RuleDialog from '@/components/RuleDialog.vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const gameName = route.name
+const gameName = ref('')
+
+watchEffect(()=>{
+  if(route.name) gameName.value = route.name
+})
 
 
 
